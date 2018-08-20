@@ -5,16 +5,26 @@ import * as BooksAPI from './BooksAPI'
 
 class Shelfs extends Component {
     state = {
+
         
-        books : []
     }
 
     componentWillMount() {
-        BooksAPI.getAll().then((books) => {
-          this.setState({ books })
+        BooksAPI.getAll().then(books => {
+            this.setState({ books  })
         })
     }
 
+    shelfUpdate(shelf, book) {
+        BooksAPI.update(book, shelf)
+    }
+
+    componentDidUpdate() {
+        BooksAPI.getAll().then(books => {
+            this.setState({ books  })
+        })
+    }
+    
     render() {
         const { books } = this.state
         const shelfs = [
@@ -31,49 +41,41 @@ class Shelfs extends Component {
                 shelfName : 'read'
             }
         ]
-        console.log(books);
 
-
-        if(books[0] === undefined) {
-            return(
-                <Shelfs shelfs={shelfs} />
-            )
-        }
-        else {
-
-        }
-
-
-
+        const Component = this
+        
         return(
+            
             shelfs.map(function(shelf) {
-                return(
-                    <div className="bookshelf">
+                
+                if (books === undefined) {
+                    return(    
+                    <div className="bookshelf" key={shelf.renderName}>
                         <h2 className="bookshelf-title">{shelf.renderName}</h2>
                         <div className="bookshelf-books">
                             <ol className="books-grid">
-
+                                
                             </ol>
                         </div>  
                     </div>
-                )
-            })
-        )
-    
+                    )
+                }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+                else  {
+                    return(    
+                    <div className="bookshelf" key={shelf.renderName}>
+                        <h2 className="bookshelf-title">{shelf.renderName}</h2>
+                        <div className="bookshelf-books">
+                            <ol className="books-grid">
+                                <Books books={books} shelf={shelf} shelfUpdate={Component.shelfUpdate} />
+                            </ol>
+                        </div>  
+                    </div>
+                    )
+                }  
+                
+            }
+        ))                     
     }
 }
 

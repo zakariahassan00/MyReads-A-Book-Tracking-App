@@ -3,8 +3,9 @@ import Shelfs from './shelfs'
 import { Link } from 'react-router-dom'
 
 class HomePage extends Component {
-     
+
     render() {
+
 
             return(
                 <div className="list-books">
@@ -13,7 +14,7 @@ class HomePage extends Component {
                     </div>
                     <div className="list-books-content">
                         <div>
-                                {<Shelfs />}
+                                <Shelfs />
                         </div>
                     </div>
                     <div className="open-search">
@@ -27,3 +28,5 @@ class HomePage extends Component {
     }
 }
 export default HomePage
+
+

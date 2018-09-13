@@ -8,7 +8,6 @@ class SearchPage extends Component {
 
     state ={
         books : []
-        
     }
 
     searchBooks(query) {
@@ -29,8 +28,10 @@ class SearchPage extends Component {
     render() {
         const {books} = this.state
         const Component = this
-        if (this.state.books === undefined ) {
+        console.log(books);
+        if (books === undefined || books.error === "empty query") {
             return(
+              <div>
                 <div className="search-books">
                 <div className="search-books-bar">
                     <Link className="close-search" to='/'>Close</Link>
@@ -38,7 +39,8 @@ class SearchPage extends Component {
                         <input type="text" placeholder="Search by title or author" onChange={(event) => Component.searchBooks(event.target.value)}/>
                     </div>
                 </div>
-                <b>Showing 0 Resaults</b>
+                </div>
+                <div className="search-books-results"><b>Showing 0 Resaults</b></div>
                 </div>
         )
         }
@@ -62,8 +64,8 @@ class SearchPage extends Component {
                         <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                             <div className="book-shelf-changer">
-                            
-                            <select value="none" onChange={(event) => Component.addBook(event.target.value, book)}> 
+
+                            <select value="none" onChange={(event) => Component.addBook(event.target.value, book)}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
@@ -86,4 +88,4 @@ class SearchPage extends Component {
     }
     }
 }
-export default SearchPage 
+export default SearchPage
